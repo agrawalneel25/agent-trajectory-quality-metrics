@@ -1,0 +1,17 @@
+{
+  "instance_id": "sample__simple-1",
+  "info": {
+    "model_stats": {
+      "api_calls": 1,
+      "instance_cost": 0.01
+    }
+  },
+  "messages": [
+    {"role": "system", "content": "You are an agent."},
+    {"role": "user", "content": "Fix the bug."},
+    {"role": "assistant", "content": "I will inspect the repo."},
+    {"role": "tool", "content": "file listing"},
+    {"role": "assistant", "content": "Done."}
+  ]
+}
+
