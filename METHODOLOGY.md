@@ -6,7 +6,7 @@ Task 1 asks for a command-line tool that reads a mini-SWE-agent-v2 trajectory JS
 
 Task 2 asks for top-five model observations. `scripts/process_top5.py` lists the public SWE-bench S3 prefixes for the five models named in the prompt, downloads each `.traj.json`, computes CLI-compatible metrics, and writes aggregate reports. Raw trajectories are not committed because the full set is large and reproducible from S3.
 
-Task 3 asks for a summary of “Towards a Science of AI Agent Reliability”. The summary is in `reports/paper_summary.md` and focuses on pages 1 through 21, excluding the appendix.
+Task 3 asks for a summary of "Towards a Science of AI Agent Reliability". The summary is in `reports/paper_summary.md` and focuses on pages 1 through 21, excluding the appendix.
 
 ## Data Sources
 

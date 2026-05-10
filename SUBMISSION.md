@@ -15,7 +15,7 @@ I also processed the public SWE-bench trajectories for the five models named in 
 
 The batch run processed 2,500 trajectories from public S3, 500 per model. The repo includes aggregate CSV/JSON outputs and a one-page report with observations about message depth, cost, and schema differences. The parser handles both normal chat-style trajectories and GPT-5-2-Codex Responses API style entries.
 
-I included the required paper summary for “Towards a Science of AI Agent Reliability” in `reports/paper_summary.md`.
+I included the required paper summary for "Towards a Science of AI Agent Reliability" in `reports/paper_summary.md`.
 
 Local verification:
 
@@ -27,4 +27,3 @@ python scripts\process_top5.py --workers 24 --out-dir reports
 ```
 
 GitHub Actions is configured to install the package, run the tests, and execute the sample CLI command.
-
