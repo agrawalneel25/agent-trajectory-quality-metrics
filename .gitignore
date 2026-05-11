@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 data/raw/
+reports/top5_trajectory_metrics.csv
 build/
 dist/
 *.egg-info/
-

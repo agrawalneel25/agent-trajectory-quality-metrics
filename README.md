@@ -8,7 +8,7 @@ This repository contains a small Python CLI for counting message roles in mini-S
 - Tests: `tests/test_metrics.py`
 - Top-five report: `reports/top5_observations.md`
 - Paper summary: `reports/paper_summary.md`
-- Aggregate outputs: `reports/top5_summary.json` and `reports/top5_trajectory_metrics.csv`
+- Aggregate summary: `reports/top5_summary.json`
 
 ## Quick Start
 
@@ -69,19 +69,7 @@ For a fast network smoke run:
 python scripts\process_top5.py --limit 2 --workers 8 --out-dir reports\smoke
 ```
 
-The full run processes 2,500 trajectories. It writes one per-trajectory CSV row plus a compact JSON summary.
-
-## Results Snapshot
-
-| Model | Resolved | Trajectories | Median messages | P90 messages | Cost / instance |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Claude 4.5 Opus high reasoning | 76.8% | 500 | 64.0 | 125.0 | $0.754 |
-| Gemini 3 Flash high reasoning | 75.8% | 500 | 110.0 | 166.2 | $0.356 |
-| MiniMax M2.5 high reasoning | 75.8% | 500 | 106.0 | 212.0 | $0.073 |
-| Claude Opus 4.6 | 75.6% | 500 | 50.0 | 117.1 | $0.552 |
-| GPT-5-2 Codex | 72.8% | 500 | 66.0 | 122.0 | $0.449 |
-
-The full interpretation is in `reports/top5_observations.md`.
+The full run processes 2,500 trajectories and writes a compact JSON summary plus a per-trajectory CSV. The report in `reports/top5_observations.md` contains the submitted analysis.
 
 ## Continuous Integration
 
