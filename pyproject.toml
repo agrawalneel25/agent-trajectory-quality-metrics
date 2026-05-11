@@ -1,0 +1,16 @@
+[project]
+name = "agent-trajectory-quality-metrics"
+version = "0.1.0"
+description = "CLI metrics for mini-SWE-agent-v2 trajectories from SWE-bench."
+requires-python = ">=3.10"
+readme = "README.md"
+
+[project.scripts]
+agent-metrics = "agent_metrics.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

@@ -1,0 +1,11 @@
+{
+  "instance_id": "sample__exit-1",
+  "messages": [
+    {"role": "system", "content": "You are an agent."},
+    {"role": "user", "content": "Fix the bug."},
+    {"role": "assistant", "content": "patch follows"},
+    {"role": "tool", "content": "tests passed"},
+    {"role": "exit", "content": "diff --git a/file.py b/file.py"}
+  ]
+}
+
