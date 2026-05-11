@@ -143,8 +143,6 @@ def _message_role(message: dict[str, Any], index: int) -> str:
     if message_type == "function_call_output":
         return "tool"
 
-    # GPT-5-2-Codex trajectories store full Responses API response objects in
-    # the same array as chat messages. Those objects represent assistant turns.
     if message.get("object") == "response" or isinstance(message.get("output"), list):
         return "assistant"
 

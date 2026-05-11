@@ -9,8 +9,6 @@ This repository contains a small Python CLI for counting message roles in mini-S
 - Top-five report: `reports/top5_observations.md`
 - Paper summary: `reports/paper_summary.md`
 - Aggregate outputs: `reports/top5_summary.json` and `reports/top5_trajectory_metrics.csv`
-- Method notes: `METHODOLOGY.md`
-- Submission text: `SUBMISSION.md`
 
 ## Quick Start
 
@@ -32,7 +30,7 @@ Exit messages:         1
 Total messages:        5
 ```
 
-The task only requires `system`, `user`, `assistant`, and `tool`. Real mini-SWE-agent-v2 trajectories also include `exit` messages and, for GPT-5-2-Codex, Responses API objects. The CLI counts the required roles and surfaces extra roles separately so schema changes are visible.
+The task only requires `system`, `user`, `assistant`, and `tool`. Real mini-SWE-agent-v2 trajectories also include `exit` messages and, for GPT-5-2-Codex, Responses API objects. The CLI counts the required roles and surfaces extra roles separately.
 
 ## CLI Usage
 
@@ -94,4 +92,3 @@ python -m pip install -e .
 python -m unittest discover -s tests
 agent-metrics data/samples/with-exit.traj.json
 ```
-

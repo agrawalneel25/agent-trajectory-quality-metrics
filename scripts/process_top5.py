@@ -15,7 +15,7 @@ from urllib.request import urlopen
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from agent_metrics import MessageMetrics, compute_metrics  # noqa: E402
+from agent_metrics import MessageMetrics, compute_metrics
 
 
 S3_BUCKET = "swe-bench-submissions"
@@ -246,4 +246,3 @@ def write_markdown_summary(path: Path, results: list[ModelResult]) -> None:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
