@@ -134,7 +134,7 @@ def main() -> int:
         "models": [item.as_dict() for item in results],
     }
     (out_dir / "top5_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
-    write_markdown_summary(out_dir / "top5_observations.md", results)
+    write_markdown_summary(out_dir / "top5_observations_generated.md", results)
     return 0
 
 
