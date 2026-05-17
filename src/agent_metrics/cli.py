@@ -18,6 +18,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--csv", action="store_true", help="emit CSV for one or more trajectories")
     args = parser.parse_args(argv)
 
+    if args.csv and args.json:
+        print("agent-metrics: --csv and --json are mutually exclusive", file=sys.stderr)
+        return 2
+
     try:
         metrics = [compute_metrics(load_json(path), path) for path in iter_input_files(args.inputs)]
     except (OSError, json.JSONDecodeError, TrajectoryError) as error:
@@ -25,6 +29,8 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     if args.csv:
+        if not metrics:
+            return 0
         writer = csv.DictWriter(sys.stdout, fieldnames=list(metrics[0].as_dict().keys()))
         writer.writeheader()
         for item in metrics:

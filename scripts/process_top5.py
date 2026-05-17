@@ -90,6 +90,9 @@ def main() -> int:
     parser.add_argument("--out-dir", default=str(ROOT / "reports"), help="directory for CSV and JSON outputs")
     args = parser.parse_args()
 
+    if args.workers <= 0:
+        parser.error("--workers must be a positive integer")
+
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -145,14 +148,19 @@ def process_model(model: dict[str, object], limit: int, workers: int) -> list[Me
         keys = keys[:limit]
     urls = [f"https://{S3_BUCKET}.s3.amazonaws.com/{quote(key)}" for key in keys]
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
-        metrics = list(executor.map(fetch_metric, urls))
+        raw = list(executor.map(fetch_metric, urls))
+    metrics = [item for item in raw if item is not None]
     return sorted(metrics, key=lambda item: item.instance_id or item.source)
 
 
-def fetch_metric(url: str) -> MessageMetrics:
-    with urlopen(url, timeout=90) as response:
-        document = json.load(response)
-    return compute_metrics(document, url)
+def fetch_metric(url: str) -> MessageMetrics | None:
+    try:
+        with urlopen(url, timeout=90) as response:
+            document = json.load(response)
+        return compute_metrics(document, url)
+    except (OSError, json.JSONDecodeError, Exception) as exc:
+        print(f"fetch_metric: failed for {url}: {exc}", file=sys.stderr)
+        return None
 
 
 def list_s3_keys(prefix: str) -> list[str]:
@@ -177,6 +185,8 @@ def list_s3_keys(prefix: str) -> list[str]:
 
 
 def summarize_model(model: dict[str, object], metrics: list[MessageMetrics]) -> ModelResult:
+    if not metrics:
+        raise RuntimeError(f"No trajectories available to summarize for model '{model.get('model')}'")
     totals = [item.total_messages for item in metrics]
     assistant = [item.assistant_messages for item in metrics]
     tool = [item.tool_messages for item in metrics]

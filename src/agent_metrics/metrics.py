@@ -38,7 +38,7 @@ class MessageMetrics:
             "assistant_messages": self.assistant_messages,
             "tool_messages": self.tool_messages,
             "other_messages": self.other_messages,
-            "other_roles": self.other_roles,
+            "other_roles": dict(self.other_roles),
             "total_messages": self.total_messages,
             "api_calls": self.api_calls,
             "cost": self.cost,
@@ -143,7 +143,7 @@ def _message_role(message: dict[str, Any], index: int) -> str:
     if message_type == "function_call_output":
         return "tool"
 
-    if message.get("object") == "response" or isinstance(message.get("output"), list):
+    if message.get("object") == "response" and isinstance(message.get("output"), list):
         return "assistant"
 
     if isinstance(message_type, str):
@@ -161,6 +161,8 @@ def _int_or_none(value: Any) -> int | None:
         return None
     if isinstance(value, int):
         return value
+    if isinstance(value, float) and value.is_integer():
+        return int(value)
     return None
 
 

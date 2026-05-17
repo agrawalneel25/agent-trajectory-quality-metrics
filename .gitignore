@@ -4,6 +4,7 @@ __pycache__/
 .pytest_cache/
 data/raw/
 reports/top5_trajectory_metrics.csv
+reports/top5_observations_generated.md
 build/
 dist/
 *.egg-info/

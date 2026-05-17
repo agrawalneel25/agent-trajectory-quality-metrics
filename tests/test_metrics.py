@@ -1,10 +1,13 @@
 import json
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
 from agent_metrics import TrajectoryError, compute_metrics, format_metrics
+from agent_metrics.cli import main
+from agent_metrics.metrics import _int_or_none
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -75,6 +78,29 @@ class MessageMetricsTest(unittest.TestCase):
         self.assertIn("System messages:", completed.stdout)
         self.assertIn("Exit messages:", completed.stdout)
         self.assertIn("Total messages:", completed.stdout)
+
+    def test_csv_empty_input_no_crash(self) -> None:
+        """--csv with an empty directory should return 0 without crashing."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            result = main(["--csv", tmpdir])
+        self.assertEqual(result, 0)
+
+    def test_int_or_none_float_integer(self) -> None:
+        """_int_or_none should coerce whole-number floats to int."""
+        self.assertEqual(_int_or_none(32.0), 32)
+        self.assertEqual(_int_or_none(0.0), 0)
+        self.assertIsNone(_int_or_none(32.5))
+
+    def test_responses_api_output_list_only_not_assistant(self) -> None:
+        """A message with only output as a list but no object=='response' should NOT become assistant."""
+        with self.assertRaises(TrajectoryError):
+            compute_metrics(
+                {
+                    "messages": [
+                        {"output": [{"type": "text", "text": "hello"}]},
+                    ]
+                }
+            )
 
 
 if __name__ == "__main__":
